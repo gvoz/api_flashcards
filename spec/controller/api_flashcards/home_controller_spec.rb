@@ -6,22 +6,26 @@ module ApiFlashcards
     routes { ApiFlashcards::Engine.routes }
 
     describe "GET #index" do
-      it "returns http success with right credentials" do
-        authentication
-        get :index
-        expect(response).to have_http_status(:success)
-      end
+      let!(:user) { create(:user) }
 
-      context "returns 401 Unauthorised" do
-        it "without login" do
+      context 'not success authenticate' do
+        it 'have\'t access to api' do
+          authentication(user.email, 'wrong')
           get :index
           expect(response.status).to eq 401
         end
 
-        it "with wrong login" do
-          request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials('admin', 'wrong')
+        it "without login" do
           get :index
           expect(response.status).to eq 401
+        end
+      end
+
+      context 'success authenticate' do
+        it 'have access to api' do
+          authentication(user.email, user.password)
+          get :index
+          expect(response.status).to eq 200
         end
       end
     end

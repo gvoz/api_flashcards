@@ -1,5 +1,3 @@
-def authentication
-  user = 'admin'
-  password = 'secret'
-  request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(user, password)
+def authentication(email, password)
+  request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(email, password)
 end
