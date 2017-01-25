@@ -1,14 +1,15 @@
 module ApiFlashcards
   class ApplicationController < ActionController::Base
-    attr_reader :current_user
+    attr_reader :user
+    before_action :request_confirm
 
     protected
 
       def request_confirm
-        authenticate_or_request_with_http_basic do |user, password|
+        authenticate_or_request_with_http_basic do |email, password|
           user = User.find_by(email: email)
           if user && user.password == password
-            @current_user = user
+            @user = user
           else
             render json: { message: "Authentication failed" }, status: 401
           end

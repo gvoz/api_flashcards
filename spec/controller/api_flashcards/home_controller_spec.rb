@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'support/authentication_helper.rb'
 
 module ApiFlashcards
   RSpec.describe HomeController, type: :controller do
@@ -9,8 +10,8 @@ module ApiFlashcards
 
       context 'not success authenticate' do
         it 'have\'t access to api' do
-          request_confirm(user.email, 'wrong')
-          get api_v1_cards_path
+          authentication(user.email, 'wrong')
+          get :index
           expect(response.status).to eq 401
         end
 
@@ -22,8 +23,8 @@ module ApiFlashcards
 
       context 'success authenticate' do
         it 'have access to api' do
-          request_confirm(user.email, user.password)
-          get api_v1_cards_path
+          authentication(user.email, user.password)
+          get :index
           expect(response.status).to eq 200
         end
       end
