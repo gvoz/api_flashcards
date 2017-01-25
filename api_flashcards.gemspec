@@ -17,8 +17,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", "~> 4.1.8"
-  s.add_dependency "rails-api"
+  s.add_dependency "rails", "~> 5.0.1"
   s.add_dependency "active_model_serializers", '~> 0.10.0'
   s.add_dependency "apipie-rails"
 
