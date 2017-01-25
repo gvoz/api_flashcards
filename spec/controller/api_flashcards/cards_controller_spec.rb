@@ -27,7 +27,6 @@ module ApiFlashcards
       end
 
       describe "Create user's cards" do
-
         before :each do
           authentication(user.email, user.password)
           get :index
@@ -63,7 +62,7 @@ module ApiFlashcards
 
         it 'success' do
           card_id = user.cards.first.id
-          get :show, { id: card_id }
+          get :show, id: card_id
           response_message = JSON.parse(response.body)
           expect(response_message['id']).to eq 1
         end
@@ -79,14 +78,14 @@ module ApiFlashcards
 
         it 'success' do
           card_id = user.cards.first.id
-          post :review, { card_id: card_id, user_translation: "дом"}
+          post :review, card_id: card_id, user_translation: "дом"
           response_message = JSON.parse(response.body)
           expect(response_message['message']).to eq 'correct translation notice'
         end
 
         it 'error' do
           card_id = user.cards.first.id
-          post :review, { card_id: card_id, user_translation: "дача"}
+          post :review, card_id: card_id, user_translation: "дача"
           response_message = JSON.parse(response.body)
           expect(response_message['message']).to eq 'incorrect translation'
         end

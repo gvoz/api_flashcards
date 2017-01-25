@@ -4,7 +4,7 @@ module ApiFlashcards
       extend Apipie::DSL::Concern
 
       api :GET, '/api/v1', 'Returns all user cards'
-      error :code => 401, :desc => "Unauthorized"
+      error code: 401, desc: "Unauthorized"
       def index
         @cards = @user.cards.order('review_date')
 
@@ -12,7 +12,7 @@ module ApiFlashcards
       end
 
       api :GET, '/v1/cards/:id', 'Show card'
-      error :code => 401, :desc => "Unauthorized"
+      error code: 401, desc: "Unauthorized"
       def show
         @card = Card.find(params[:id])
         render json: @card
@@ -20,8 +20,8 @@ module ApiFlashcards
 
       api :POST, '/v1/cards', 'Creates new card'
       param :original_text, :translated_text, :review_date
-      error :code => 400, :desc => "Wrong params: blank text"
-      error :code => 401, :desc => "Unauthorized"
+      error code: 400, desc: "Wrong params: blank text"
+      error code: 401, desc: "Unauthorized"
       def create
         @card = @user.cards.build(card_params)
 
@@ -34,7 +34,7 @@ module ApiFlashcards
 
       api :POST, '/v1/cards', 'Check Translate card'
       param :card_id, :user_translation
-      error :code => 401, :desc => "Unauthorized"
+      error code: 401, desc: "Unauthorized"
       def review
         @card = @user.cards.find(card_review_params[:card_id])
         check = CheckTranslate.new
